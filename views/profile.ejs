@@ -1,0 +1,28 @@
+<body style="background-color: white;">
+    <div class="pwrapper">
+        <div class="pprofilesetup">
+            <h2>Finish Profile Setup</h2>
+        </div>
+        <h3 style="padding-top: 4%; padding-left: 5%;">Profile Picture</h3>
+        <div class="pbox">
+            <div class="pprofile-picture">
+                
+                <div class="pprofile-icon">
+                    <img id="uploaded-image" src="#" alt="Uploaded image">
+                </div>
+                <div class="pprofile-button">
+                    <input type="file" id="pprofile-photo-upload" accept="image/*" style="display: none;" onchange="previewImage(this);">
+                <label for="pprofile-photo-upload" class="pupload-button" >Upload</label>
+                </div>
+            </div>
+            <div class="pprofile-details">
+                <label for="pdisplay-name">Display Name</label>
+                <input type="text" id="pdisplay-name">
+                <label for="pbio">Bio</label>
+                <textarea id="pbio"></textarea>
+                <button id="pconfirm-button">Confirm</button>
+            </div>
+        </div>
+    </div>
+    <script src = "/js/others.js"></script>
+</body>

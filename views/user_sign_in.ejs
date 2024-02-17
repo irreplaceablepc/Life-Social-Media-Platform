@@ -1,0 +1,22 @@
+<div id="in_container">
+    <div id="in_left">
+        <img src="/img/sign.png" alt="sign in page left side logo" style="border-radius: 8% 0 0 8%; width: 100%; height: 100%; margin-bottom: -1%;">
+    </div>
+    <div id="in_right">
+        <h1>Hi there!</h1>
+        <p>Please enter your details to log in.</p>
+        <br>
+        <br>
+        <form action="/users/create-session" method="POST">
+            <!-- Your login form fields here -->
+            <input type="text" name="email" placeholder="Phone number, Username or email" required style="margin-bottom: 25px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 16px); box-sizing: border-box; background-color: rgb(245, 245, 245);">
+            <br>
+            <input type="password" name="password" placeholder="Password" required style="margin-bottom: 25px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 16px); box-sizing: border-box; background-color: rgb(245, 245, 245);">
+            <br>
+            <input type="submit" value="Login" style="margin-bottom: 10px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 16px); box-sizing: border-box; background-color: #0d6efd; color: white;">
+        </form>
+        <br>
+        <br>
+        <p>Don't have an account? <span style="color: #0d6efd;"><i><a href="/users/sign-up">Sign Up</a></i></span></p>
+    </div>
+</div>
