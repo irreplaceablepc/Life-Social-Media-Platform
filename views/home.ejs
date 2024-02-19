@@ -66,11 +66,17 @@
                 </div>
                 <% for(post of posts){ %>
                 <div id="h_post">
-                    <%- include('_post') -%>
+                    
+                
+                        <%= post.content %>
+                        <img src="<%= post.pimg %>" alt="" width="100px">
+                            
+                    
+                    
                 </div>
                 <%} %>
             </div>
-
+        
 
 
 

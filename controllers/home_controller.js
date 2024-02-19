@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const User = require('../models/user');
+const OtherModel = require('../models/OtherModel');
 
 
 module.exports.home = async (req,res)=>{
@@ -27,10 +28,13 @@ module.exports.home = async (req,res)=>{
 
         //after posts users will get executed
         let users = await User.find({});
+        const otherModel = await OtherModel.find({});
+        // return res.render('profile', { profile_user: user, otherModel: otherModel });
         //then the funciton will return
         return res.render('home', {
             posts: posts,
-            all_users: users
+            all_users: users,
+            otherModel: otherModel
         });
 
 

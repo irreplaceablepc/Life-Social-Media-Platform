@@ -50,9 +50,7 @@
 
 
 
-    <% for (let data of otherModel) { %>
-        <img src="<%= data.fileName %>" alt="Image" width="100px" />
-      <% } %>
+   
       
 
 
@@ -69,7 +67,7 @@
 
 
    
-    <form action="/users/pimgs/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
+    <form action="/posts/pimgs/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
         <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required/>
         <input type="email" name="email" placeholder="Your email" value="<%=profile_user.email%>" required/>
         <input type="file" name="pimgs" placeholder="Profile picture"/>

@@ -2,6 +2,14 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const User = require('../models/user');
 const Like = require('./../models/like');
+const path = require('path');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const secretKey = 'anythingForNow';
+const pimgsDir = path.join(__dirname, '..', 'uploads/users/pimgs');
+const express = require('express');
+const router = express.Router();
+// const Post = require('../models/post');
 
 module.exports.create = async (req,res)=>{
     //create a new post
@@ -71,3 +79,53 @@ module.exports.destroy = async (req,res)=>{
     }
     
 }
+
+
+// post images upload
+module.exports.pimgs = async (req, res) => {
+    try {
+        if (req.user.id !== req.params.id) {
+            throw new Error('Unauthorized!');
+        }
+
+        const user = await User.findById(req.params.id);
+
+        User.puploadedAvatar(req, res, async (err) => {
+            if (err) {
+                console.error(err);
+                req.flash('error', 'An error occurred during file upload.');
+                return res.redirect('back');
+            }
+            user.name = req.body.name;
+            user.email = req.body.email;
+
+            if (req.file) {
+                // user.pimgs = User.pavatarPath + '/' + req.file.filename;
+                // const post = new Post({
+                //     fileName: User.pavatarPath + '/' + req.file.filename
+                //   });
+                //   await Post.save();
+                // post image upload using this
+                const post = await Post.create({
+                    content: req.body.content,
+                    pimg: User.pavatarPath + '/' + req.file.filename, //pimg is the place where img is saved(post database)
+                    user: req.user._id
+                });
+                
+            }
+
+            try {
+                await user.save();
+                req.flash('success', 'Profile updated successfully.');
+                return res.redirect('back');
+            } catch (err) {
+                console.error('Error saving user:', err);
+                req.flash('error', 'An error occurred during user save.');
+                return res.redirect('back');
+            }
+        });
+    } catch (err) {
+        req.flash('error', err.message || 'An error occurred during update.');
+        return res.redirect('back');
+    }
+};

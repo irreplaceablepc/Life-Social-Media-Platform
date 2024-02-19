@@ -2,8 +2,10 @@ const mongoose  = require('mongoose');
 
 const postSchema = new mongoose.Schema({
     content: {
-        type: String,
-        required: true
+        type: String
+    },
+    pimg: {
+        type: String
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,   //referring to object id of each user
