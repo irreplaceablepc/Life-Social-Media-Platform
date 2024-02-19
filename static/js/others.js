@@ -1,12 +1,10 @@
-function previewImage(input) {
-    var img = document.getElementById('uploaded-image');
-    var file = input.files[0];
-    var reader = new FileReader();
+// Get the file input and the form
+const avatarInput = document.getElementById('avatarInput');
+const uploadForm = document.getElementById('uploadForm');
+const uploadButton = document.getElementById('uploadButton');
 
-    reader.onload = function(e) {
-        img.src = e.target.result;
-        img.style.display = 'block';
-    };
-
-    reader.readAsDataURL(file);
-}
+// Add an event listener to the file input
+avatarInput.addEventListener('change', function() {
+    // Submit the form when a file is selected
+    uploadForm.submit();
+});

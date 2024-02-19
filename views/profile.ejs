@@ -1,28 +1,95 @@
 <body style="background-color: white;">
     <div class="pwrapper">
         <div class="pprofilesetup">
-            <h2>Finish Profile Setup</h2>
+            <h2>Profile Setup</h2>
         </div>
         <h3 style="padding-top: 4%; padding-left: 5%;">Profile Picture</h3>
         <div class="pbox">
+            <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST" id="uploadForm">
             <div class="pprofile-picture">
-                
                 <div class="pprofile-icon">
-                    <img id="uploaded-image" src="#" alt="Uploaded image">
+                    <img src="<%=user.avatar%>" alt="<%=user.name%>" width="100">
                 </div>
                 <div class="pprofile-button">
-                    <input type="file" id="pprofile-photo-upload" accept="image/*" style="display: none;" onchange="previewImage(this);">
-                <label for="pprofile-photo-upload" class="pupload-button" >Upload</label>
+                        <input type="file" name="avatar" placeholder="Profile picture" id="avatarInput" style="display: none;">
+                        <label for="avatarInput" id="uploadButton" class="pupload-button">Upload</label>
                 </div>
             </div>
             <div class="pprofile-details">
                 <label for="pdisplay-name">Display Name</label>
-                <input type="text" id="pdisplay-name">
+                <input type="text" name="name" id="pdisplay-name" value="<%=profile_user.name%>" required />
+                <label for="pdisplay-name">E-Mail</label>
+                <input type="text" name="email" id="pdisplay-name" value="<%=profile_user.email%>" required />
                 <label for="pbio">Bio</label>
-                <textarea id="pbio"></textarea>
-                <button id="pconfirm-button">Confirm</button>
+                <textarea type="text" name="bio" id="pbio"><%=profile_user.bio%></textarea>
+                <input type="submit" id="pconfirm-button" value="Confirm">
             </div>
+            </form>
         </div>
     </div>
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <% for (let data of otherModel) { %>
+        <img src="<%= data.fileName %>" alt="Image" width="100px" />
+      <% } %>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    <form action="/users/pimgs/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
+        <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required/>
+        <input type="email" name="email" placeholder="Your email" value="<%=profile_user.email%>" required/>
+        <input type="file" name="pimgs" placeholder="Profile picture"/>
+        <input type="submit" value="Update">
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <script src = "/js/others.js"></script>
 </body>

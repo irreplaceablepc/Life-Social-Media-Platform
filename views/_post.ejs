@@ -1,3 +1,19 @@
+<div>
+    <div>
+        <img src="" alt="user">
+    </div>
+    <div>
+        user name
+        user namename
+    </div>
+</div>
+
+
+
+
+
+
+
 <li id="post-<%=post._id%>">
     <p>
         <%if (locals.user && locals.user.id == post.user.id){ %>
@@ -5,7 +21,8 @@
         <% }%>
 
         <%= post.content %>
-        <br>
+        <hr>
+        <!-- --------------------------------------------------------------------------------------- -->
         <small>
             <%= post.user.name %>
         </small>

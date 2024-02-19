@@ -2,6 +2,12 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const path = require('path');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const secretKey = 'anythingForNow';
+const pimgsDir = path.join(__dirname, '..', 'uploads/users/pimgs');
+const express = require('express');
+const router = express.Router();
+const OtherModel = require('../models/OtherModel');
 
 module.exports.signIn = (req, res) => {
     if (req.isAuthenticated()) {
@@ -20,12 +26,14 @@ module.exports.signUp = (req, res) => {
 module.exports.profile = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        return res.render('user_profile', { profile_user: user });
+        const otherModel = await OtherModel.find({});
+        return res.render('profile', { profile_user: user, otherModel: otherModel });
     } catch (err) {
         req.flash('error', 'User not found');
         return res.redirect('/');
     }
 };
+
 
 module.exports.update = async (req, res) => {
     try {
@@ -35,30 +43,43 @@ module.exports.update = async (req, res) => {
 
         const user = await User.findById(req.params.id);
 
-        User.uploadedAvatar(req, res, (err) => {
+        User.uploadedAvatar(req, res, async (err) => {
             if (err) {
                 console.error(err);
+                req.flash('error', 'An error occurred during file upload.');
                 return res.redirect('back');
             }
-
             user.name = req.body.name;
             user.email = req.body.email;
+            user.bio = req.body.bio;
 
             if (req.file) {
                 if (user.avatar) {
-                    fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    try {
+                        await fs.promises.unlink(path.join(__dirname, '..', user.avatar));
+                    } catch (err) {
+                        console.error('Error deleting previous avatar:', err);
+                    }
                 }
                 user.avatar = User.avatarPath + '/' + req.file.filename;
             }
 
-            user.save();
-            return res.redirect('back');
+            try {
+                await user.save();
+                req.flash('success', 'Profile updated successfully.');
+                return res.redirect('back');
+            } catch (err) {
+                console.error('Error saving user:', err);
+                req.flash('error', 'An error occurred during user save.');
+                return res.redirect('back');
+            }
         });
     } catch (err) {
         req.flash('error', err.message || 'An error occurred during update.');
         return res.redirect('back');
     }
 };
+
 
 module.exports.create = async (req, res) => {
     const data = {
@@ -112,7 +133,9 @@ module.exports.create = async (req, res) => {
         req.flash('error', 'An error occurred while creating the account.');
         return res.redirect('back');
     }
-  };
+};
+
+
 
 //sign in and create session for user
 module.exports.createSession = (req,res)=>{
@@ -132,3 +155,73 @@ module.exports.destroySession = (req, res) => {
     });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports.pimgs = async (req, res) => {
+    try {
+        if (req.user.id !== req.params.id) {
+            throw new Error('Unauthorized!');
+        }
+
+        const user = await User.findById(req.params.id);
+
+        User.puploadedAvatar(req, res, async (err) => {
+            if (err) {
+                console.error(err);
+                req.flash('error', 'An error occurred during file upload.');
+                return res.redirect('back');
+            }
+            user.name = req.body.name;
+            user.email = req.body.email;
+
+            if (req.file) {
+                user.pimgs = User.pavatarPath + '/' + req.file.filename;
+                const otherModel = new OtherModel({
+                    fileName: User.pavatarPath + '/' + req.file.filename
+                  });
+                  await otherModel.save();
+            }
+
+            try {
+                await user.save();
+                req.flash('success', 'Profile updated successfully.');
+                return res.redirect('back');
+            } catch (err) {
+                console.error('Error saving user:', err);
+                req.flash('error', 'An error occurred during user save.');
+                return res.redirect('back');
+            }
+        });
+    } catch (err) {
+        req.flash('error', err.message || 'An error occurred during update.');
+        return res.redirect('back');
+    }
+};

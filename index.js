@@ -13,6 +13,14 @@ const passportLocal = require('./config/passport-local-strategy');
 const passportJwt = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const sassMiddleware = require('node-sass-middleware');
+const bodyParser = require('body-parser');
+
+
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Parse JSON bodies (as sent by API clients)
+app.use(bodyParser.json());
 
 const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
@@ -25,7 +33,8 @@ app.use(sassMiddleware({
     prefix: '/css'  //where server should look for css files
 }));
 
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(express.static('./static'));

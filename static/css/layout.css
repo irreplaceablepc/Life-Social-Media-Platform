@@ -176,7 +176,64 @@ body {
   display: none; }
 
 .pprofile-icon img {
-  display: none;
   width: 100px;
   height: 100px;
   border-radius: 50%; }
+
+#home_c {
+  height: 100%;
+  width: 100%;
+  display: flex; }
+
+#left_home {
+  height: 100%;
+  width: 30%;
+  padding-top: 2%;
+  border-right: 2px solid #dedddd;
+  background-color: white; }
+
+#right_home {
+  height: 100vh;
+  width: 70%;
+  background-color: #e2e2e2;
+  overflow-y: auto; }
+
+#left_home img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: auto; }
+
+#left_home h1, #left_home p {
+  width: 100px;
+  display: block;
+  margin: auto;
+  padding-left: 1%; }
+
+#left_home h1 {
+  width: 100px;
+  display: block;
+  margin: auto;
+  padding-left: 4%; }
+
+#h_icon {
+  display: flex;
+  margin-left: 10%; }
+
+#h_icon i {
+  margin-right: 5%;
+  padding-top: 6%; }
+
+#h_icon h2 {
+  margin-bottom: 5%;
+  padding-top: 5%; }
+
+#h_post {
+  background-color: whitesmoke;
+  height: 95vh;
+  width: 40vw;
+  margin-left: 25%;
+  border-radius: 8%;
+  border: 1px solid #cfcfcf;
+  margin-bottom: 5%; }
