@@ -4,7 +4,7 @@
             <h1 style="padding-top: 2%;">Life</h1>
             <input id="h-search-bar" type="search" class="h-form-control" placeholder="Search" aria-label="Search" autocomplete="off">
             <% if(locals.user) {%>
-            <button type="button" class="h-button" data-toggle="modal" data-target="#post-modal" id="post-modal-trigger">+ Create Post</button>
+            <button type="button" class="h-button" data-toggle="modal" data-target="#post-modal" id="post-modal-trigger" onclick="togglePage('page1')">+ Create Post</button>
             <%} %>
     </div>
 </header>

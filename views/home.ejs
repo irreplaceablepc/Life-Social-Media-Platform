@@ -44,8 +44,73 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div id="right_home">
-                    
+                <div id="pageContent" class="page-content">
+                    <div id="page1">This is Page 1
+                        <% if(locals.user) { %>
+                            <form action="/posts/create" id="new-post-form" method = "POST">
+                                <textarea name="content" id="" cols="30" rows="3" placeholder="type here...." required></textarea>
+                                <input type="submit" value="Post">
+                            </form>
+                        <%}%>
+                        <form action="/posts/pimgs/<%=user.id%>" enctype="multipart/form-data" method="POST">
+                            <input type="text" name="name" placeholder="Your Name" value="<%=user.name%>" required/>
+                            <input type="email" name="email" placeholder="Your email" value="<%=user.email%>" required/>
+                            <input type="file" name="pimgs" placeholder="Profile picture"/>
+                            <input type="submit" value="Update">
+                        </form>
+                    </div>
+                    <ul>
+                        <% for(post of posts){ %>
+                        
+                            <%- include('_post') -%>
+                            <img src="<%= post.pimg %>" alt="" width="100px">
+                                
+                        <%} %>
+                    </ul>
+                </div>
             </div>
 
 
@@ -60,8 +125,18 @@
 
 
 
-            
-        
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -139,6 +214,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
 <!-- 
 <div style="margin: 5% 5% 0% 28%; font-size: 250%;">
     Feed
@@ -154,3 +238,11 @@
     
 </div>
 <%} %> -->
+
+
+
+
+
+
+
+<script src="/js/others.js"></script>

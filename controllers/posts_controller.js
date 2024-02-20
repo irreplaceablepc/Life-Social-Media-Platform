@@ -41,44 +41,44 @@ module.exports.create = async (req,res)=>{
 
 }
 
-module.exports.destroy = async (req,res)=>{
-    //deleting a post if the user is authorized to do so
-    // console.log(req.params.id);
-    try{
+module.exports.destroy = async (req, res) => {
+    try {
         let post = await Post.findById(req.params.id);
-        if(post.user == req.user.id)
-        {
-            await Like.deleteMany({likeable: req.params.id, onModel: 'Post'});
-            await Like.deleteMany({_id: {$in:post.comments}});
+        if (!post) {
+            req.flash('error', 'Post not found');
+            return res.redirect('back');
+        }
 
-            post.remove();
-            //removing comments from db
-            await Comment.deleteMany({post: req.params.id});
-            if(req.xhr)
-            {
+        if (post.user == req.user.id) {
+            await Like.deleteMany({ likeable: req.params.id, onModel: 'Post' });
+            await Like.deleteMany({ _id: { $in: post.comments } });
+
+            await post.deleteOne(); // Use deleteOne() instead of remove()
+
+            // Removing comments from db
+            await Comment.deleteMany({ post: req.params.id });
+
+            if (req.xhr) {
                 return res.status(200).json({
                     data: {
                         post_id: req.params.id
                     },
-                    message: "Post deleted"
+                    message: 'Post deleted'
                 });
             }
+
             req.flash('success', 'Post deleted');
             return res.redirect('back');
-        }
-        else
-        {
+        } else {
             req.flash('error', 'You can not delete this post');
             res.redirect('back');
         }
-    }
-    catch(err)
-    {
-        req.flash('error', err);
+    } catch (err) {
+        req.flash('error', 'An error occurred while deleting the post');
         res.redirect('back');
     }
-    
-}
+};
+
 
 
 // post images upload

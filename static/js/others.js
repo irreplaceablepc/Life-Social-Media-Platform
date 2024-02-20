@@ -8,3 +8,13 @@ avatarInput.addEventListener('change', function() {
     // Submit the form when a file is selected
     uploadForm.submit();
 });
+
+//  home to post button and back
+function togglePage(pageId) {
+    var page = document.getElementById(pageId);
+    if (page.style.display === 'none') {
+        page.style.display = 'block';
+    } else {
+        page.style.display = 'none';
+    }
+}

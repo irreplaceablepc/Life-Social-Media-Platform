@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Like = require('../models/like');
 const Comment = require('../models/comment');
 const Post = require('../models/post');
@@ -20,8 +21,11 @@ module.exports.toggleLike = async (req, res)=>{
         if(existingLike){
             likeable.likes.pull(existingLike._id);
             likeable.save();
-            existingLike.remove();
+            // Use deleteOne method to delete the document
+            await Like.deleteOne({ _id: existingLike._id });
             deleted = true;
+            // Set a flash message to indicate that the comment was unliked
+            req.flash('success', 'Comment unliked');
         } else {
             let newLike = await Like.create({
                 user: req.user._id,
@@ -31,17 +35,10 @@ module.exports.toggleLike = async (req, res)=>{
 
             likeable.likes.push(newLike);
             likeable.save();
-      
-
+            // Set a flash message to indicate that the comment was liked
+            req.flash('success', 'Comment liked');
         }
-        res.json(200, {
-            message: 'request successful',
-            data: {
-                deleted
-            }
-        })
-
-        
+        res.redirect('back');
     } catch(err) {
         console.log(err);
         return res.json(500, {
@@ -49,3 +46,4 @@ module.exports.toggleLike = async (req, res)=>{
         })
     }
 }
+
