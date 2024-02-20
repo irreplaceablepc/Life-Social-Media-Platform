@@ -1,0 +1,55 @@
+<div id="home_c">
+    <div id="left_home">
+        <!-- Profile Photo name -->
+        <img src="<%=user.avatar%>" alt="<%=user.name%>">
+        <h1><%=user.name%></h1>
+        <p>@<%=user.username%></p>
+        <hr>
+        <!-- post following -->
+        <div style="display: flex; padding-left: 5%; padding-top: 3%; padding-bottom: 3%; text-align: center;">
+            <div style="padding-left: 1%;">
+                <h2>0</h2>
+                <p>Post</p>
+            </div>
+            <div style="padding-left: 13%;">
+                <h2>0</h2>
+                <p>Followers</p>
+            </div>
+            <div style="padding-left: 13%;">
+                <h2>0</h2>
+                <p>Following</p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div id="h_icon">
+                <i class="bi bi-house-door"></i>
+                <a href="http://localhost:3000/">
+                    <h2>Home</h2>
+                </a>
+            </div>
+            <div id="h_icon">
+                <i class="bi bi-person"></i>
+                <a href="/users/profile/<%=user.id%>">
+                    <h2>Profile</h2>         
+                </a>
+            </div>
+            <div id="h_icon">
+                <i class="bi bi-gear"></i>
+                <a href="/users/settings/<%=user.id%>">
+                    <h2>Settings</h2>         
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="right_home">
+        <li>
+            <a href="/users/profile/<%=user.id%>">
+                <%= user.name%>                
+            </a>
+        </li>
+        <li>
+            <a href="/users/sign-out">Sign out</a>
+        </li>
+    </div>
+</div>

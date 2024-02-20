@@ -16,12 +16,6 @@ module.exports.signIn = (req, res) => {
     return res.render('user_sign_in');
 };
 
-module.exports.signUp = (req, res) => {
-    if (req.isAuthenticated()) {
-        return res.redirect('/users/profile');
-    }
-    return res.render('user_sign_up');
-};
 
 module.exports.profile = async (req, res) => {
     try {
@@ -34,6 +28,10 @@ module.exports.profile = async (req, res) => {
         return res.redirect('/');
     }
 };
+
+module.exports.settings = async (req, res) => {
+    return res.render('settings');
+}
 
 
 module.exports.update = async (req, res) => {

@@ -13,12 +13,12 @@ const authenticateUser = (req, res, next) => {
 };
 
 router.get('/sign-in', usersController.signIn);
-router.get('/sign-up', usersController.signUp);
 
 
 // Routes with authentication middleware
 router.get('/profile/:id', authenticateUser, usersController.profile);
 router.post('/update/:id', authenticateUser, usersController.update);
+router.get('/settings/:id', authenticateUser, usersController.settings);
 
 router.post('/create', usersController.create);
 

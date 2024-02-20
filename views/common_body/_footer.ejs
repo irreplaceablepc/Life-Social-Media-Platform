@@ -7,6 +7,10 @@
         <h1 style="margin-left: 2%; margin-top: 2%;">Life</h1>
     </div>
     <div>
-        <h3>Login <span style="padding: 0 10px;">Sign up</span> <span style="padding: 0 10px;">Feed</span> <span style="padding: 0 10px;">Settings</span></h3>
+        <% if(locals.user) {%>
+            <h3>Feed <span style="padding: 0 10px;">Settings</span>
+        <%} else{%>
+            <h3>Login <span style="padding: 0 10px;">Sign up</span> 
+        <%} %>
     </div>
 </footer>

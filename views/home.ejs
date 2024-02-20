@@ -1,13 +1,5 @@
 <ul>
     <% if(locals.user) {%>
-        <li>
-            <a href="/users/profile/<%=user.id%>">
-                <%= user.name%>                
-            </a>
-        </li>
-        <li>
-            <a href="/users/sign-out">Sign out</a>
-        </li>
         <div id="home_c">
             <div id="left_home">
                 <!-- Profile Photo name -->
@@ -34,48 +26,41 @@
                 <div>
                     <div id="h_icon">
                         <i class="bi bi-house-door"></i>
-                        <h2>Home</h2>
+                        <a href="http://localhost:3000/">
+                            <h2>Home</h2>
+                        </a>
                     </div>
                     <div id="h_icon">
                         <i class="bi bi-person"></i>
-                        <h2>Profile</h2>
+                        <a href="/users/profile/<%=user.id%>">
+                            <h2>Profile</h2>         
+                        </a>
                     </div>
                     <div id="h_icon">
                         <i class="bi bi-gear"></i>
-                        <h2>Settings</h2>
+                        <a href="/users/settings/<%=user.id%>">
+                            <h2>Settings</h2>         
+                        </a>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div id="right_home">
-                <div style="margin: 5% 5% 0% 28%; font-size: 250%;">
-                    Feed
-                </div>
-                <% for(post of posts){ %>
-                <div id="h_post">
                     
-                
-                        <%= post.content %>
-                        <img src="<%= post.pimg %>" alt="" width="100px">
-                            
-                    
-                    
-                </div>
-                <%} %>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
         
 
 
@@ -94,48 +79,78 @@
 
 
         </div>
+        
     <% } else{ %>
-        <li>
-            <a href="/users/sign-in">Sign In</a>
-        </li>
-        <li>
-            <a href="/users/sign-up">Sign Up</a>
-        </li>
+        <div id="up_container">
+            <div id="up_left">
+                <img src="/img/sign_up.png" alt="sign_up logo" style="width: 35vw; height: 80vh; border-radius: 8% 0 0 8%;">
+            </div>
+            <div id="up_right">
+                <h1 style="font-size: 50px;">Create an account</h1>
+                <p style="font-size: 20px;">Start sharing moments, one click at a time!</p>
+                <form action="/users/create" method="POST" style="padding-top: 5%;">
+                <input type="email" name="email" placeholder="Email" required style="margin-bottom: 10px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 280px); box-sizing: border-box; background-color: rgb(243, 243, 243);">
+                <input type="number" name="phone" placeholder="Phone Number" required style="margin-bottom: 10px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; width: calc(100% - 240px); box-sizing: border-box; margin-left: 25px; background-color: rgb(243, 243, 243);">
+                <br>
+                <br>
+                <input type="text" name="name" placeholder="Full Name" required id="up_form">
+                <br>
+                <br>
+                <input type="text" name="username" placeholder="Username" required id="up_form">
+                <br>
+                <br>
+                <input type="password" name="password" placeholder="Password" required id="up_form">
+                <br>
+                <br>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required id="up_form">
+                <br>
+                <br>
+                <input type="submit" value="Next" id="up_form" style="background-color: #0d6efd;">
+                </form>
+                <p>Have an account? <span style="color: blue;"><a href="/users/sign-in">Sign in</a></span></p>
+            </div>
+        </div>
     <%}%>
 </ul>
 
 
 
-<!-- ------------------------------------------------------------------------------------------------------- -->
-<div>Home</div>
 
-<section id = "feed-posts">
-    <h4>Posts</h4>
-    <% if(locals.user) { %>
 
-        <form action="/posts/create" id="new-post-form" method = "POST">
-            <textarea name="content" id="" cols="30" rows="3" placeholder="type here...." required></textarea>
-            <input type="submit" value="Post">
-        </form>
-    <%}%>
-        <div id="posts-lists-container">
-            <ul>
-                <% for(post of posts){ %>
-                
-                    <%- include('_post') -%>
-                        
-                <%} %>
-            </ul>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<div style="margin: 5% 5% 0% 28%; font-size: 250%;">
+    Feed
+</div>
+<% for(post of posts){ %>
+<div id="h_post">
     
-</section>
-<section id="user-friends">
-    <h4>Friends</h4>
-    <% for(user of all_users) {%>
-        <p>
-            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
-        </p>
-    <%}%>
-</section>
-<script src = "/js/home_comments.js"></script>
-<script src="/js/home_posts.js"></script>
+
+        <%= post.content %>
+        <img src="<%= post.pimg %>" alt="" width="100px">
+            
+    
+    
+</div>
+<%} %> -->
