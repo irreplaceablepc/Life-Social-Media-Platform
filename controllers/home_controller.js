@@ -26,6 +26,7 @@ module.exports.home = async (req,res)=>{
         }).populate('likes')
 
         //after posts users will get executed
+        
         let users = await User.find({});
         return res.render('home', {
             posts: posts,

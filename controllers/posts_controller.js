@@ -18,17 +18,11 @@ module.exports.create = async (req,res)=>{
             content: req.body.content,
             user: req.user._id
         });
-
-        if(req.xhr)
-        {
-            post = await post.populate('user', 'name').execPopulate();
-            return res.status(200).json({
-                data: {
-                    post: post
-                },
-                message: 'Post Created'
-            });
-        }
+        const user = await User.findById(req.user._id);
+        const postCount = await Post.countDocuments({ user: req.user._id });
+        console.log(postCount);
+        user.totalPost = postCount;
+        await user.save();
         req.flash('success', 'Post published');
         res.redirect('back');
     }
@@ -57,6 +51,13 @@ module.exports.destroy = async (req, res) => {
 
             // Removing comments from db
             await Comment.deleteMany({ post: req.params.id });
+
+
+            const user = await User.findById(req.user._id);
+            const postCount = await Post.countDocuments({ user: req.user._id });
+            console.log(postCount);
+            user.totalPost = postCount;
+            await user.save();
 
             if (req.xhr) {
                 return res.status(200).json({
@@ -96,8 +97,7 @@ module.exports.pimgs = async (req, res) => {
                 req.flash('error', 'An error occurred during file upload.');
                 return res.redirect('back');
             }
-            user.name = req.body.name;
-            user.email = req.body.email;
+            
 
             if (req.file) {
                 // user.pimgs = User.pavatarPath + '/' + req.file.filename;
@@ -111,6 +111,11 @@ module.exports.pimgs = async (req, res) => {
                     pimg: User.pavatarPath + '/' + req.file.filename, //pimg is the place where img is saved(post database)
                     user: req.user._id
                 });
+                const user = await User.findById(req.user._id);
+                 const postCount = await Post.countDocuments({ user: req.user._id });
+                console.log(postCount);
+                user.totalPost = postCount;
+                await user.save();
                 
             }
 

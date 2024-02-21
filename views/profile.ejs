@@ -1,9 +1,9 @@
 <div id="home_c">
     <div id="left_home">
         <!-- Profile Photo name -->
-        <img src="<%=user.avatar%>" alt="<%=user.name%>">
-        <h1><%=user.name%></h1>
-        <p>@<%=user.username%></p>
+        <img src="<%=profile_user.avatar%>" alt="<%=user.name%>">
+        <h1><%=profile_user.name%></h1>
+        <p>@<%=profile_user.username%></p>
         <hr>
         <!-- post following -->
         <div style="display: flex; padding-left: 5%; padding-top: 3%; padding-bottom: 3%; text-align: center;">
@@ -49,12 +49,12 @@
                 <div class="pprofilesetup">
                     <h2>Profile Setup</h2>
                 </div>
-                <h3 style="padding-top: 4%; padding-left: 5%;">Profile Picture</h3>
+                <h3 style="padding-top: 1%; padding-left: 5%;">Profile Picture</h3>
                 <div class="pbox">
                     <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST" id="uploadForm">
                     <div class="pprofile-picture">
                         <div class="pprofile-icon">
-                            <img src="<%=user.avatar%>" alt="<%=user.name%>" width="100">
+                            <img src="<%=profile_user.avatar%>" alt="<%=user.name%>" width="100">
                         </div>
                         <div class="pprofile-button">
                                 <input type="file" name="avatar" placeholder="Profile picture" id="avatarInput" style="display: none;">
@@ -71,18 +71,16 @@
                         <input type="submit" id="pconfirm-button" value="Confirm">
                     </div>
                     </form>
-                    <form action="/posts/pimgs/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
-                        <input type="text" name="name" placeholder="Your Name" value="<%=profile_user.name%>" required/>
-                        <input type="email" name="email" placeholder="Your email" value="<%=profile_user.email%>" required/>
-                        <input type="file" name="pimgs" placeholder="Profile picture"/>
-                        <input type="submit" value="Update">
-                    </form>
+                    <div class="image-grid">
+                        <% userPosts.forEach(post => { %>
+                        <div class="image-item">
+                            <img src="<%= post.pimg %>" alt="" width="100%">
+                            <p><%= post.content %></p>
+                        </div>
+                        <% }) %>
+                    </div>
                 </div>
-            </div>
-            <h2><%= profile_user.name %></h2>
-            <p>Total Posts: <%= postCount %></p>
-            
-            
+            </div>        
             <script src = "/js/others.js"></script>
         </body>
     </div>

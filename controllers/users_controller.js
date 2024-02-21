@@ -21,7 +21,8 @@ module.exports.profile = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         const postCount = await Post.countDocuments({ user: user.id });
-           return res.render('profile', { profile_user: user, postCount: postCount});
+        const userPosts = await Post.find({ user: req.params.id });
+        return res.render('profile', { profile_user: user, postCount: postCount, userPosts: userPosts});
     } catch (err) {
         req.flash('error', 'User not found');
         return res.redirect('/');
