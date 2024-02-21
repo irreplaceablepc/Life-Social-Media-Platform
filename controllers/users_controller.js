@@ -20,9 +20,8 @@ module.exports.signIn = (req, res) => {
 module.exports.profile = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        // const otherModel = await OtherModel.find({});
-        // return res.render('profile', { profile_user: user, otherModel: otherModel });
-           return res.render('profile', { profile_user: user});
+        const postCount = await Post.countDocuments({ user: user.id });
+           return res.render('profile', { profile_user: user, postCount: postCount});
     } catch (err) {
         req.flash('error', 'User not found');
         return res.redirect('/');

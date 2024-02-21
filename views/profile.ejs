@@ -8,7 +8,7 @@
         <!-- post following -->
         <div style="display: flex; padding-left: 5%; padding-top: 3%; padding-bottom: 3%; text-align: center;">
             <div style="padding-left: 1%;">
-                <h2>0</h2>
+                <h2><%= postCount %></h2>
                 <p>Post</p>
             </div>
             <div style="padding-left: 13%;">
@@ -79,7 +79,9 @@
                     </form>
                 </div>
             </div>
-           
+            <h2><%= profile_user.name %></h2>
+            <p>Total Posts: <%= postCount %></p>
+            
             
             <script src = "/js/others.js"></script>
         </body>

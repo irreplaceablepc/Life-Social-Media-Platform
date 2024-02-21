@@ -103,6 +103,7 @@
                         </form>
                     </div>
                     <ul>
+                        
                         <% for(post of posts){ %>
                         
                             <%- include('_post') -%>
@@ -239,6 +240,14 @@
 </div>
 <%} %> -->
 
+<section id="user-friends">
+    <h4>Friends</h4>
+    <% for(user of all_users) {%>
+        <p>
+            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+        </p>
+    <%}%>
+</section>
 
 
 
