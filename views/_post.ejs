@@ -1,5 +1,5 @@
-<!-- 
-<li id="post-<%=post._id%>">
+
+<!-- <li id="post-<%=post._id%>">
     <p>
         <%if (locals.user && locals.user.id == post.user.id){ %>
             <a href="/posts/destroy/<%= post.id %>" class="delete-post-button">Delete Post</a>
@@ -53,6 +53,7 @@
     <div class="post-content">
         <div class="post-image">
             <img src="<%= post.pimg %>" alt="Post Image" class="post-picture">
+            <h2><%= post.content %></h2>
         </div>
     </div>
     <div class="actions">
@@ -65,13 +66,14 @@
         <% } else { %>
             <p>Likes</p>
         <% } %>
+        <h2><%-post.likes.length-%></h2>
         <button type="submit" id="comment-button" class="comment-button">
             <i class="bi bi-chat"></i>
         </button>
+        <h2><%-post.comments.length-%></h2>
     </div>
-    <div id="comment-div" style="display: none;">
+    <div id="comment-div">
         <div class="post-comments">
-        
             <% if (locals.user){ %>
                 <form action="/comments/create" class="new-comment-form" method="POST" >
                 
@@ -81,37 +83,16 @@
                 </form>
             <% } %>
         </div>
-        <div class="post-comments-list">
-           <ul id="post-comments-<%= post._id %>">
-               <%for(comment of post.comments){%>
-                   <%- include('_comment') -%>
-               <%}%>
-           </ul>
-        </div>
+    </div>
+    <div class="post-comments-list">
+        <ul id="post-comments-<%= post._id %>">
+            <%for(comment of post.comments){%>
+                <%- include('_comment') -%>
+            <%}%>
+        </ul>
     </div>
 </div>
 <br>
-
-
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#comment-button').click(function () {
-            $('#comment-div').toggle();
-        });
-    });
-</script>
-
-
-<script src="/js/others.js"></script>
-
-
-
-
 
 
 

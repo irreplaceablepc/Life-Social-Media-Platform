@@ -84,10 +84,10 @@ module.exports.destroy = async (req, res) => {
 
 // post images upload
 module.exports.pimgs = async (req, res) => {
-    try {
-        if (req.user.id !== req.params.id) {
-            throw new Error('Unauthorized!');
-        }
+    // try {
+    //     if (req.user.id !== req.params.id) {
+    //         throw new Error('Unauthorized!');
+    //     }
 
         const user = await User.findById(req.params.id);
 
@@ -129,8 +129,8 @@ module.exports.pimgs = async (req, res) => {
                 return res.redirect('back');
             }
         });
-    } catch (err) {
-        req.flash('error', err.message || 'An error occurred during update.');
-        return res.redirect('back');
-    }
+    // } catch (err) {
+    //     req.flash('error', err.message || 'An error occurred during update.');
+    //     return res.redirect('back');
+    // }
 };

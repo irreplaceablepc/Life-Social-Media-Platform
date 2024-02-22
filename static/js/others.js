@@ -18,13 +18,3 @@ function togglePage(pageId) {
         page.style.display = 'none';
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('comment-button').addEventListener('click', function () {
-        var commentDiv = document.getElementById('comment-div');
-        if (commentDiv.style.display === 'none') {
-            commentDiv.style.display = 'block';
-        } else {
-            commentDiv.style.display = 'none';
-        }
-    });
-});

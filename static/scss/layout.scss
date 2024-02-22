@@ -314,83 +314,10 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
 }
-
-
-// below start post feed
-/* Style the post container */
-// .posts-container {
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// /* Style the individual post */
-// .post {
-//   border: 1px solid #ccc;
-//   border-radius: 8px;
-//   margin-bottom: 20px;
-//   padding: 10px;
-// }
-
-// /* Style the user profile section */
-// .user-profile {
-//   display: flex;
-//   align-items: center;
-//   margin-bottom: 1px;
-// }
-
-// .profile-picture {
-//   width: 50px;
-//   height: 50px;
-//   border-radius: 50%;
-//   margin-top: 1%;
-//   margin-left: 2%;
-// }
-
-// .username {
-//   font-weight: bold;
-//   font-size: 150%;
-// }
-
-// /* Style the post image */
-// .post-image {
-//   margin-bottom: 10px;
-// }
-
-// .post-picture {
-//   margin-left: 35%;
-//   width: 30%;
-//   border-radius: 8px;
-// }
-
-// /* Style the comment section */
-// .comments {
-//   padding-left: 10px;
-// }
-
-// .comment {
-//   margin-bottom: 5px;
-//   font-size: 14px;
-// }
-// // heart like button
-// .like-button {
-//   background-color: transparent;
-//   border: none;
-//   cursor: pointer;
-//   padding: 0;
-//   font-size: 1.2rem;
-//   color: #262626;
-// }
-
-// .like-button:hover {
-//   color: #ed4956;
-// }
-
-
-
-
+// feed and post show
 .center-box {
   width: 55%;
-  height: 630px;
+  height: 685px;
   margin: 0 auto;
   background-color: white;
   border: 1px solid rgb(175, 175, 175);
@@ -398,16 +325,19 @@ body {
   border-radius: 5%;
 }
 // user profile and img
-.user-info, .post-content, .actions {
+.user-info{
   display: flex;
   margin-left: 1%;
-  margin-top: 2%;
+}
+.post-content, .actions {
+  display: flex;
+  margin-left: 1%;
+  margin-top: 1%;
 }
 .profile-picture {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-top: 1%;
   margin-left: 2%;
 }
 .userp{
@@ -415,9 +345,14 @@ body {
   margin-left: 2%;
 }
 // post content
-.post-picture, .post-image {
+.post-picture {
   width: 100%;
   height: 400px;
+  border-radius: 10px;
+}
+.post-image {
+  width: 100%;
+  height: 432px;
   border-radius: 10px;
 }
 
@@ -440,10 +375,51 @@ body {
   margin-left: 3%;
 }
 #comment-div{
-  display: flex;
+  display: flexbox;
   margin-left: 1%;
-  margin-top: 2%;
+  margin-top: 1%;
 }
+.post-comments-list{
+  width: 99%;
+  max-height: 60px;
+  margin-left: 1%;
+  padding-left: 3%;
+  overflow-y: auto;
+}
+// comment of comments
+.post-comments {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.comment-content {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.comment-content:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.input-submit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.input-submit:hover {
+  background-color: #0056b3;
+}
+
 
 
 
