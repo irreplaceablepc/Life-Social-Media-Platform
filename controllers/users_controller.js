@@ -79,6 +79,23 @@ module.exports.update = async (req, res) => {
     }
 };
 
+module.exports.password = async (req, res) => {
+    const { password} = req.body;
+    try {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds); 
+        const user = await User.findById(req.user._id);
+        user.password = hashedPassword;
+        await user.save();
+        req.flash('success', 'Password Changed.');
+        return res.redirect('back');
+    } catch (error) {
+        console.error('Error password change:', error);
+        req.flash('error', 'An error occurred while creating the account.');
+        return res.redirect('back');
+    }
+}
+
 
 module.exports.create = async (req, res) => {
     const data = {

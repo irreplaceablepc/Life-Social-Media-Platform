@@ -18,3 +18,4 @@ function togglePage(pageId) {
         page.style.display = 'none';
     }
 }
+// password change form

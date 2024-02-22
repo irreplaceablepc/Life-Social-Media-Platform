@@ -42,14 +42,20 @@
                         </a>
                     </div>
                 </div>
-                <section id="user-friends">
+                <hr>
+                <div id="userdetails">
                     <h4>Friends</h4>
-                    <% for(user of all_users) {%>
-                        <p>
-                            <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
-                        </p>
-                    <%}%>
-                </section>
+                    <div class="users-list">
+                        <% for(user of all_users) {%>
+                            <div class="all-users">
+                                <img src="<%= user.avatar %>" alt="" style="width: 15%; height: 40px;">
+                                <p>
+                                    <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+                                </p>
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
             </div>
 
 

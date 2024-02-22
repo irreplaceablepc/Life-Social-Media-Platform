@@ -19,6 +19,7 @@ router.get('/sign-in', usersController.signIn);
 router.get('/profile/:id', authenticateUser, usersController.profile);
 router.post('/update/:id', authenticateUser, usersController.update);
 router.get('/settings/:id', authenticateUser, usersController.settings);
+router.post('/password/:id', authenticateUser, usersController.password);
 
 router.post('/create', usersController.create);
 
