@@ -19,6 +19,7 @@ module.exports.signIn = (req, res) => {
 
 module.exports.profile = async (req, res) => {
     try {
+        
         const user = await User.findById(req.params.id);
         const postCount = await Post.countDocuments({ user: user.id });
         const userPosts = await Post.find({ user: req.params.id });
@@ -169,4 +170,23 @@ module.exports.destroySession = (req, res) => {
         req.flash('success', 'You have logged out successfully!');
         return res.redirect('/');
     });
+};
+
+module.exports.search = async (req, res) => {
+    try {
+        const query = req.query.query;
+
+        const users = await User.find({ 
+            $or: [
+                { name: { $regex: new RegExp(query, 'i') } },
+                { email: { $regex: new RegExp(query, 'i') } },
+                // Add other fields you want to search by
+            ]
+        });
+
+        res.json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
 };

@@ -44,7 +44,7 @@
 
 <div class="center-box">
     <div class="user-info">
-        <img src="<%= post.user.avatar %>" alt="Profile Picture" class="profile-picture">
+        <img src="<%= post.user.avatar %>" alt="Profile Picture" class="profile-picture" onerror="this.onerror=null; this.src='/img/avatar.png'">
         <div class="userp">
             <p class="name" style="font-weight: bold;"><%= user.name %></p>
             <p class="username">@<%= user.username %></p>
@@ -52,7 +52,7 @@
     </div>
     <div class="post-content">
         <div class="post-image">
-            <img src="<%= post.pimg %>" alt="Post Image" class="post-picture">
+            <img src="<%= post.pimg %>" alt="Post Image" class="post-picture" onerror="this.onerror=null; this.src='/img/avatar.png'">
             <h2><%= post.content %></h2>
         </div>
     </div>

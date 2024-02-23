@@ -2,7 +2,7 @@
         <div id="home_c">
             <div id="left_home">
                 <!-- Profile Photo name -->
-                <img src="<%=user.avatar%>" alt="<%=user.name%>">
+                <img src="<%=user.avatar%>" alt="<%=user.name%>" onerror="this.onerror=null; this.src='/img/avatar.png'">
                 <h1><%=user.name%></h1>
                 <p>@<%=user.username%></p>
                 <hr>
@@ -48,7 +48,7 @@
                     <div class="users-list">
                         <% for(user of all_users) {%>
                             <div class="all-users">
-                                <img src="<%= user.avatar %>" alt="" style="width: 15%; height: 40px;">
+                                <img src="<%= user.avatar %>" alt="" style="width: 15%; height: 40px;" onerror="this.onerror=null; this.src='/img/avatar.png'">
                                 <p>
                                     <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
                                 </p>

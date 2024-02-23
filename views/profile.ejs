@@ -1,7 +1,7 @@
 <div id="home_c">
     <div id="left_home">
         <!-- Profile Photo name -->
-        <img src="<%=profile_user.avatar%>" alt="<%=user.name%>">
+        <img src="<%=profile_user.avatar%>" alt="" onerror="this.onerror=null; this.src='/img/avatar.png'">
         <h1><%=profile_user.name%></h1>
         <p>@<%=profile_user.username%></p>
         <hr>
@@ -54,7 +54,7 @@
                     <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST" id="uploadForm">
                     <div class="pprofile-picture">
                         <div class="pprofile-icon">
-                            <img src="<%=profile_user.avatar%>" alt="<%=user.name%>" width="100">
+                            <img src="<%=profile_user.avatar%>" alt="" onerror="this.onerror=null; this.src='/img/avatar.png'" width="100">
                         </div>
                         <div class="pprofile-button">
                                 <input type="file" name="avatar" placeholder="Profile picture" id="avatarInput" style="display: none;">
@@ -74,7 +74,7 @@
                     <div class="image-grid">
                         <% userPosts.forEach(post => { %>
                         <div class="image-item">
-                            <img src="<%= post.pimg %>" alt="" width="100%">
+                            <img src="<%= post.pimg %>" alt="" width="100%" onerror="this.onerror=null; this.src='/img/avatar.png'">
                             <p><%= post.content %></p>
                         </div>
                         <% }) %>

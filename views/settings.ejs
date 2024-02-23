@@ -1,7 +1,7 @@
 <div id="home_c">
     <div id="left_home">
         <!-- Profile Photo name -->
-        <img src="<%=user.avatar%>" alt="<%=user.name%>">
+        <img src="<%=user.avatar%>" alt="<%=user.name%>" onerror="this.onerror=null; this.src='/img/avatar.png'">
         <h1><%=user.name%></h1>
         <p>@<%=user.username%></p>
         <hr>
