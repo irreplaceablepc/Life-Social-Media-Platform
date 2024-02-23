@@ -103,10 +103,10 @@
                 <!-- post create show div -->
                 <div id="pageContent" class="page-content">
                     <div id="page1">
-                            <form action="/posts/create" id="new-post-form" method = "POST">
-                                <textarea name="content" id="" cols="30" rows="3" placeholder="type here...." required></textarea>
-                                <input type="submit" value="Post">
-                            </form>
+                        <form action="/posts/create" id="new-post-form" method = "POST">
+                            <textarea name="content" id="" cols="30" rows="3" placeholder="type here...." required></textarea>
+                            <input type="submit" value="Post">
+                        </form>
                             <form action="/posts/pimgs/<%=user.id%>" enctype="multipart/form-data" method="POST">
                                 <textarea name="content" id="" cols="30" rows="3" placeholder="type here...."></textarea>
                                 <input type="file" name="pimgs" placeholder="Profile picture" required/>
