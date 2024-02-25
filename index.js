@@ -1,8 +1,10 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const db = require('./config/mongoose');
-const user = require('./models/user');
+const User = require('./models/user');
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const PORT = 3000;
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
@@ -14,6 +16,7 @@ const passportJwt = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const sassMiddleware = require('node-sass-middleware');
 const bodyParser = require('body-parser');
+const Chat = require('./models/chatModel');
 
 
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -77,8 +80,46 @@ app.use(customMiddleware.setFlash);
 //use express router
 app.use('/',require('./routes'));
 
+var usp = io.of('/user-namespace');
+
+usp.on('connection', async function(socket){
+    console.log('User Connected');
+    var userId = socket.handshake.auth.token;
+
+       await User.findByIdAndUpdate({ _id: userId}, { $set: {is_online: '1'} });
+
+      // user broadcast online status
+      socket.broadcast.emit('getOnlineUser', {user_id: userId});
+
+  socket.on('disconnect', async function(){
+    console.log('User Disconnected');
+    var userId = socket.handshake.auth.token;
+
+        await User.findByIdAndUpdate({ _id: userId}, { $set: {is_online: '0'} });
+
+        // user broadcast online status
+        socket.broadcast.emit('getOfflineUser', {user_id: userId});
+    });
+
+    // chatting implemention
+    socket.on('newChat', function(data){
+        socket.broadcast.emit('loadNewChat', data);
+    })
+
+    // load old chats
+    socket.on('existsChat', async function(data){
+      var chats = await  Chat.find({ $or :[
+        { sender_id:data.sender_id, receiver_id:data.receiver_id},
+        { sender_id:data.receiver_id, receiver_id:data.sender_id},
+      ]});
+
+      socket.emit('loadChats', {chats: chats});
+
+    });
+});
+
 app.locals.rmWhitespace = true;
-app.listen(PORT,(err)=>{
+http.listen(PORT,(err)=>{
     if(err)
         console.log("Error occured");
     else

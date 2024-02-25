@@ -5,6 +5,10 @@ const path = require('path');
 const AVATAR_PATH = path.join('/uploads/users/avatars');
 const PAVATAR_PATH = path.join('/uploads/users/pimgs');
 const userSchema = new mongoose.Schema({
+    is_online:{
+        type:String,
+        default:'0'
+    },
     email:{
         type:String,
         required:true,
