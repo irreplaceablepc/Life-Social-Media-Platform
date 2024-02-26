@@ -41,61 +41,56 @@
                 </a>
             </div>
         </div>
-    </div>
-
-    <div id="right_home">
-        <h2 class="mb-4">Hi, <%= user.name %></h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <ul class="list-group">
-            <%
-                if(users.length > 0){
-                    for(let i=0; i<users.length; i++){
-                        %>
-                            <li class="list-group-item list-group-item-dark cursor-pointer user-list" data-id="<%= users[i]['_id'] %>">
-                                <img src="<%= users[i]['avatar'] %>" alt="" width="50px" height="50px" onerror="this.onerror=null; this.src='/img/avatar.png'">
-                                <%= users[i]['name'] %>
-
-                                <%
-                                    if(users[i]['is_online'] == 1){
-                                        %>
-                                            <sup class="online-status" id="<%= users[i]['_id']%>-status">Online</sup>
-                                        <%
-                                    }
-                                    else{
-                                        %>
-                                            <sup class="offline-status" id="<%= users[i]['_id']%>-status">Offline</sup>
-                                        <%
-                                    } 
-                                %>
-                            </li>
-                        <%
+        <hr>
+        <div class="online-users">
+            <h4>Users</h4>
+            <div class="online-users-box">
+            <ul class="list-group">
+                <%
+                    if(users.length > 0){
+                        for(let i=0; i<users.length; i++){
+                            %>
+                                <li class="cursor-pointer user-list online-all-users" data-id="<%= users[i]['_id'] %>" data-name="<%= users[i]['name'] %>">
+                                    <img src="<%= users[i]['avatar'] %>" alt="" style="width: 15%; height: 40px;" onerror="this.onerror=null; this.src='/img/avatar.png'">
+                                    <p><%= users[i]['name'] %></p>
+                                    <%
+                                        if(users[i]['is_online'] == 1){
+                                            %>
+                                                <sup class="online-status" id="<%= users[i]['_id']%>-status">Online</sup>
+                                            <%
+                                        }
+                                        else{
+                                            %>
+                                                <sup class="offline-status" id="<%= users[i]['_id']%>-status">Offline</sup>
+                                            <%
+                                        } 
+                                    %>
+                                </li>
+                            <%
+                        }
                     }
-                }
-            %>
-        </ul>
-    </div>
-    <div class="col-md-8">
-        <h3 class="start-head">Click to Start the Chat</h3>
-        <div class="chat-section">
-            <div class="chat-container">
-                <div class="current-user-chat">
-                    <h5>right</h5>
-                </div>
-                <div class="distance-user-chat">
-                    <h5>left</h5>
-                </div>
+                %>
+            </ul>
             </div>
-                    <form action="" id="chat-form">
-                        <input type="text" name="message" placeholder="Enter Message" id="message" class="border" required>
-                        <input type="submit" value="Send Message" class="btn btn-primary ">
-                    </form>
-                
         </div>
     </div>
-</div>
-</div>
+    <div id="right_home_message">
+            <section class="msger">
+                <header class="msger-header">
+                  <div class="msger-header-title">
+                    <div class="userName">
+                        <h5></h5>
+                    </div>
+                  </div>
+                </header>
+                <main class="msger-chat chat-container">
+                </main>
+                <form action="" id="chat-form" class="msger-inputarea">
+                  <input type="text" name="message" placeholder="Enter Message" id="message" class="msger-input" required>
+                  <button type="submit" class="msger-send-btn">Send</button>
+                </form>
+              </section>         
+    </div>
 </div>
 
 <script>
@@ -110,12 +105,14 @@
         $('.user-list').click(function(){
             var userId = $(this).attr('data-id');
             receiver_id = userId;
-            console.log(receiver_id);
 
-            $('.start-head').hide();
-            $('.chat-section').show();
+            var userName = $(this).attr('data-name');
+            if (userName !== null && userName !== '') {
+            $('.userName h5').html(userName);
+        }
 
-            socket.emit('existsChat', {sender_id:sender_id, receiver_id:receiver_id});
+
+            socket.emit('existsChat', {sender_id:sender_id, receiver_id:receiver_id, userName:userName});
         });
     });
 
@@ -151,12 +148,13 @@
                     <h5>`+chat+`</h5>
                 </div>
                 `;
-                $('#chat-container').append(html);
+                $('.chat-container').append(html);
                 socket.emit('newChat', response.data);
             }
             else{
                 alert(response.msg);
             }
+            scrollChat();
         }
     });
 });
@@ -164,16 +162,17 @@
         if(sender_id == data.receiver_id && receiver_id == data.sender_id){
             let html = `
                     <div class="distance-user-chat">
-                        <h5>`+chat+`</h5>
+                        <h5>`+data.message+`</h5>
                     </div>
                     `;
-                    $('#chat-container').append(html);
+                    $('.chat-container').append(html);
         }
+        scrollChat();
 });
 
 // load old chats
     socket.on('loadChats', function(data){
-        $('#chat-container').html('');
+        $('.chat-container').html('');
 
         var chats = data.chats;
         let html = '';
@@ -185,14 +184,20 @@
             }
             else{
                 addClass = 'distance-user-chat';
-            }
 
+            }
             html +=`
-            <div class='`+addClass`'>
+            <div class='`+addClass+`'>
                 <h5>`+chats[x]['message']+`</h5>
             </div>
             `;
         }
-        $('#chat-container').append(html);
+        $('.chat-container').append(html);
+        scrollChat();
     });
+
+    function scrollChat(){
+        $('.chat-container').animate({ scrollTop: $('.chat-container')[0].scrollHeight }, 1000);
+
+    }
 </script>
