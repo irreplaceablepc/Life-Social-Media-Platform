@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path:'./vars/.env'});
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const db = require('./config/mongoose');
@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 
 const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
+const path = require('path');
 
 app.use(sassMiddleware({
     src: './static/scss',
