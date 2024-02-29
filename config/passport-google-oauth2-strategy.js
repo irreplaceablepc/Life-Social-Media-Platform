@@ -4,9 +4,9 @@ const crypto = require('crypto');
 const User = require('../models/user');
 
 passport.use(new googleStrategy({
-    clientID: '1052859533762-ri8115crugfu25a4rubc34sit1fd03tt.apps.googleusercontent.com',
-    clientSecret: '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',
-    callbackURL: 'http://localhost:8000/auth/google/callback',
+    clientID: process.env.CLIENTID,
+    clientSecret: process.env.CLIENTSECRET,
+    callbackURL: process.env.CALLBACKURL,
     },
     //profile has the info abt the user
     (accessToken, refreshToken, profile, cb)=>{

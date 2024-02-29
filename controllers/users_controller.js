@@ -199,6 +199,7 @@ module.exports.saveChat = async(req, res) =>{
             receiver_id : req.body.receiver_id,
             message : req.body.message,
         });
+        
 
         var newChat= await chat.save();
         res.status(200).send({ success: true, msg: 'chat inserted', data: newChat});

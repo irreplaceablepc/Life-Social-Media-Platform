@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const db = require('./config/mongoose');
@@ -5,7 +6,7 @@ const User = require('./models/user');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const PORT = 3000;
+const PORT = process.env.PORT;
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
@@ -57,14 +58,14 @@ app.set('views','./views');
 //mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'life',
-    secret: 'evadudyaja',
+    secret: process.env.SECRET_KEY,
     saveUninitialized: false,
     resave: false,
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
     store: MongoStore.create({
-      mongoUrl: 'mongodb://localhost:27017', // replace with your MongoDB connection string
+      mongoUrl: process.env.MONGOSEDB, // replace with your MongoDB connection string
       autoRemove: 'disabled',
     })
   }));

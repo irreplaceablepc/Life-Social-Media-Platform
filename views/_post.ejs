@@ -46,8 +46,8 @@
     <div class="user-info">
         <img src="<%= post.user.avatar %>" alt="Profile Picture" class="profile-picture" onerror="this.onerror=null; this.src='/img/avatar.png'">
         <div class="userp">
-            <p class="name" style="font-weight: bold;"><%= user.name %></p>
-            <p class="username">@<%= user.username %></p>
+            <p class="name" style="font-weight: bold;"><%= post.user.name %></p>
+            <p class="username">@<%= post.user.username %></p>
         </div>
     </div>
     <div class="post-content">

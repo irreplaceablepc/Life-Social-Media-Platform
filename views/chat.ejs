@@ -50,7 +50,7 @@
                     if(users.length > 0){
                         for(let i=0; i<users.length; i++){
                             %>
-                                <li class="cursor-pointer user-list online-all-users" data-id="<%= users[i]['_id'] %>" data-name="<%= users[i]['name'] %>">
+                                <li class="cursor-pointer user-list online-all-users" data-id="<%= users[i]['_id'] %>" data-name="<%= users[i]['name'] %>" data-img="<%= users[i]['avatar'] %>">
                                     <img src="<%= users[i]['avatar'] %>" alt="" style="width: 15%; height: 40px;" onerror="this.onerror=null; this.src='/img/avatar.png'">
                                     <p><%= users[i]['name'] %></p>
                                     <%
@@ -106,13 +106,15 @@
             var userId = $(this).attr('data-id');
             receiver_id = userId;
 
+            var userImg = $(this).attr('data-img');
+
             var userName = $(this).attr('data-name');
             if (userName !== null && userName !== '') {
             $('.userName h5').html(userName);
         }
 
 
-            socket.emit('existsChat', {sender_id:sender_id, receiver_id:receiver_id, userName:userName});
+            socket.emit('existsChat', {sender_id:sender_id, receiver_id:receiver_id, userName:userName, userImg:userImg});
         });
     });
 
@@ -173,7 +175,7 @@
 // load old chats
     socket.on('loadChats', function(data){
         $('.chat-container').html('');
-
+        
         var chats = data.chats;
         let html = '';
         for(let x=0; x < chats.length; x++){

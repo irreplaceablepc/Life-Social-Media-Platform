@@ -5,7 +5,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey : 'secretForNow'
+    secretOrKey : process.env.SECRETORKEY
 }
 
 passport.use(new JwtStrategy(opts, (jwt_payload, done)=> {
