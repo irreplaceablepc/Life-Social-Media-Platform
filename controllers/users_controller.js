@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const path = require('path');
 const fs = require('fs');
@@ -9,6 +10,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 const Chat = require('../models/chatModel');
+const Follow = require('../models/follow');
 
 module.exports.signIn = (req, res) => {
     if (req.isAuthenticated()) {
@@ -208,3 +210,56 @@ module.exports.saveChat = async(req, res) =>{
         res.status(400).send({ success: false, msg: error.message});
     }
 }
+
+exports.follow = async (req, res) => {
+    try {
+        const { current_user, followingId } = req.body;
+        
+        console.log('current_user:', current_user); // Log followerId
+        console.log('followingId:', followingId);
+
+        // Check if followerId is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(current_user)) {
+            return res.status(400).send('Invalid current_user');
+        }
+
+        // Convert followerId to ObjectId (ensure you're using the new keyword)
+        const followerObjectId = new mongoose.Types.ObjectId(current_user);
+
+
+        // Check if the follow relationship already exists
+        let existingFollow = await Follow.findOne({ current_user: followerObjectId, followingId });
+        let totalFollowing = await Follow.countDocuments({ current_user: followerObjectId });
+        let totalFollowers = await Follow.countDocuments({ followingId });
+
+        // If the follow relationship already exists, remove it (unfollow)
+        if (existingFollow) {
+            await Follow.deleteOne({ _id: existingFollow._id });
+            console.log(`User ${current_user} unfollowed user ${followingId}`);
+            totalFollowing--;
+            totalFollowers--;
+            req.flash('error','Unfollowed');
+        } else {
+            // If the follow relationship doesn't exist, create it (follow)
+            await Follow.create({ current_user: followerObjectId, followingId });
+            console.log(`User ${current_user} followed user ${followingId}`);
+            totalFollowing++;
+            totalFollowers++; // Increment totalFollowers when a user follows another user
+            req.flash('success','Followed');
+        }
+
+        // Update the totalFollowing count in the User model
+        await User.findByIdAndUpdate(current_user, { totalFollowing });
+
+        // Update the totalFollowers count in the User model of the user being followed
+        await User.findByIdAndUpdate(followingId, { totalFollowers });
+
+        console.log('Updated totalFollowing:', totalFollowing);
+        console.log('Updated totalFollowers:', totalFollowers);
+        res.redirect('/');
+        
+    } catch (err) {
+        console.error('Error following/unfollowing user:', err);
+        res.status(500).send('Internal Server Error');
+    }
+};

@@ -49,6 +49,11 @@
             <p class="name" style="font-weight: bold;"><%= post.user.name %></p>
             <p class="username">@<%= post.user.username %></p>
         </div>
+            <form action="/users/follow" method="post">
+                <input type="hidden" name="current_user" value="<%= current_user %>">
+                <input type="hidden" name="followingId" value="<%= post.user.id %>">
+                <button type="submit" class="follow-button">Follow</button>
+            </form>
     </div>
     <div class="post-content">
         <div class="post-image">

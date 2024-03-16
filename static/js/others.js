@@ -38,3 +38,25 @@ $('#h-search-bar').on('input', async (event) => {
     }
 });
 {/* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> */}
+
+
+function showFollowersList() {
+    var followersListDiv = document.getElementById("followersList");
+    followersListDiv.style.display = "block";
+  }
+
+  function hideFollowersList() {
+    var followersListDiv = document.getElementById("followersList");
+    followersListDiv.style.display = "none";
+  }
+
+
+  function showFollowingList() {
+    var followingListDiv = document.getElementById("followingList");
+    followingListDiv.style.display = "block";
+  }
+
+  function hideFollowingList() {
+    var followingListDiv = document.getElementById("followingList");
+    followingListDiv.style.display = "none";
+  }

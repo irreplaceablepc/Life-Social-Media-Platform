@@ -43,6 +43,14 @@ const userSchema = new mongoose.Schema({
     totalPost: {
         type: Number,
         default: 0
+    },
+    totalFollowing: {
+        type: Number,
+        default: 0
+    },
+    totalFollowers:{
+        type: Number,
+        default: 0
     }
 },{
     timestamps:true

@@ -1,5 +1,6 @@
 const Post = require('../../../models/post');
 const Comment = require('../../../models/comment');
+const User = require('../../../models/user')
 module.exports.index = async (req,res)=>{
     let posts = await Post.find({})
         .sort('-createdAt')

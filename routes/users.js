@@ -38,6 +38,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 
 router.get('/search', usersController.search);
 router.post('/save-chat', usersController.saveChat);
+router.post('/follow', usersController.follow);
 
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const User = require('../models/user');
+const Follow = require('../models/follow');
 
 
 module.exports.home = async (req,res)=>{
@@ -25,14 +26,27 @@ module.exports.home = async (req,res)=>{
             }
         }).populate('likes')
 
+        const userId = req.user ? req.user.id : null;
+
+        // Find all users who are following the current user
+        const followers = await Follow.find({ followingId: userId }).populate('current_user');
+
+        // Find all users whom the current user is following
+        const following = await Follow.find({ current_user: userId }).populate('followingId');
+
+        // Log or console the followers and following lists
+        console.log('Followers:', followers);
+        console.log('Following:', following);
+
         //after posts users will get executed
-        
         let users = await User.find({});
         return res.render('home', {
             posts: posts,
-            all_users: users
+            all_users: users,
+            current_user: req.user ? req.user.id : null,
+            followers,
+            following
         });
-
 
     }
     catch(err)
