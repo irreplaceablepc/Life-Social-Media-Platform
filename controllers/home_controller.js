@@ -34,10 +34,6 @@ module.exports.home = async (req,res)=>{
         // Find all users whom the current user is following
         const following = await Follow.find({ current_user: userId }).populate('followingId');
 
-        // Log or console the followers and following lists
-        console.log('Followers:', followers);
-        console.log('Following:', following);
-
         //after posts users will get executed
         let users = await User.find({});
         return res.render('home', {

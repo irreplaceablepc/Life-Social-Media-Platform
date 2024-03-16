@@ -22,11 +22,16 @@ module.exports.signIn = (req, res) => {
 
 module.exports.profile = async (req, res) => {
     try {
-        
+        const userId = req.user.id;
+        // Find all users who are following the current user
+        const followers = await Follow.find({ followingId: userId }).populate('current_user');
+
+        // Find all users whom the current user is following
+        const following = await Follow.find({ current_user: userId }).populate('followingId');
         const user = await User.findById(req.params.id);
         const postCount = await Post.countDocuments({ user: user.id });
         const userPosts = await Post.find({ user: req.params.id });
-        return res.render('profile', { profile_user: user, postCount: postCount, userPosts: userPosts});
+        return res.render('profile', { profile_user: user, postCount: postCount, userPosts: userPosts, followers:followers,following:following});
     } catch (err) {
         req.flash('error', 'User not found');
         return res.redirect('/');
@@ -34,7 +39,13 @@ module.exports.profile = async (req, res) => {
 };
 
 module.exports.settings = async (req, res) => {
-    return res.render('settings');
+    const userId = req.user.id;
+        // Find all users who are following the current user
+        const followers = await Follow.find({ followingId: userId }).populate('current_user');
+
+        // Find all users whom the current user is following
+        const following = await Follow.find({ current_user: userId }).populate('followingId');
+    return res.render('settings', { followers:followers,following:following});
 }
 
 

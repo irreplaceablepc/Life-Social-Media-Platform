@@ -9,11 +9,18 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 const Chat = require('../models/chatModel');
+const Follow = require('../models/follow');
 
 
 module.exports.chatLoad = async (req, res) => {
+    const userId = req.user.id;
+        // Find all users who are following the current user
+        const followers = await Follow.find({ followingId: userId }).populate('current_user');
+
+        // Find all users whom the current user is following
+        const following = await Follow.find({ current_user: userId }).populate('followingId');
     var users = await User.find({ _id: { $nin: [req.session.user]} });
-    return res.render('chat', { ajay: req.session.user, users : users});
+    return res.render('chat', { ajay: req.session.user, users : users, followers:followers,following:following});
 }
 
 
